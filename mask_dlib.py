@@ -20,11 +20,15 @@ color_black = (0, 0, 0)
 maskColour = input("Please select the choice of mask color\nEnter 1 for blue\nEnter 2 for black:\n")
 maskColour = int(maskColour)
 
+maskColourStr = ""
+
 if maskColour == 1:
     maskColour = color_blue
     print('You selected mask color = blue')
+    maskColourStr = "blue"
 elif maskColour == 2:
     maskColour = color_black
+    maskColourStr = "black"
     print('You selected mask color = black')
 else:
     print("Invalid selection, please select again.")
@@ -34,12 +38,17 @@ maskCoverageType = input(
     "Please enter choice of mask type coverage \nEnter 1 for high \nEnter 2 for medium \nEnter 3 for low :\n")
 maskCoverageType = int(maskCoverageType)
 
+maskCoverageTypeStr = ""
+
 if maskCoverageType == 1:
     print(f'You chosen wide, high coverage mask')
+    maskCoverageTypeStr = "high"
 elif maskCoverageType == 2:
     print(f'You chosen wide, medium coverage mask')
+    maskCoverageTypeStr = "med"
 elif maskCoverageType == 3:
     print(f'You chosen wide, low coverage mask')
+    maskCoverageTypeStr = "low"
 else:
     print("invalid selection, please select again.")
     input("Please enter choice of mask type coverage \nEnter 1 for high \nEnter 2 for medium \nEnter 3 for low :\n")
@@ -107,11 +116,12 @@ for filename in os.listdir(faceImagePath):
         # change parameter [mask_type] and color_type for various combination
         img3 = cv2.fillPoly(img2, [mask_type[maskCoverageType]], maskColour, lineType=cv2.LINE_AA)
 
+        outputNameofImage = "output/mask_dlib/" + maskColourStr + "/" + maskCoverageTypeStr + "/" + filename
+        print("Saving output image to", outputNameofImage)
+        cv2.imwrite(outputNameofImage, img3)
 
     # Save the output file for testing
-    outputNameofImage = "output/mask_dlib/imagetest.jpg"
-    print("Saving output image to", outputNameofImage)
-    cv2.imwrite(outputNameofImage, img3)
+
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

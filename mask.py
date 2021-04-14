@@ -20,10 +20,11 @@ for filename in os.listdir(faceImagePath):
 
     for (x, y, w, h) in face_rects:
         try:
+            # Adjust the height and weight parameters
             if h > 0 and w > 0:
-                h, w = int(0.65 * h), int(0.75 * w)
-                y += 160
-                x += 40
+                h, w = int(0.6 * h), int(0.7 * w)
+                y += 155
+                x += 55
 
 
             roi = image[y:y + h, x:x + w]
