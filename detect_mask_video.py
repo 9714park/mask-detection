@@ -226,8 +226,8 @@ print("[INFO] video saved to " + "output/videos/" + modelNameFile + "_" + videoN
 
 # Plot a pie chart comparing the time spent with mask on vs mask off
 print("[INFO] Generating report...")
-maskOn_Time = round(mask_on / 30, 2)
-maskOff_Time = round(mask_off / 30, 2)
+maskOn_Time = round(mask_on / fps, 2)
+maskOff_Time = round(mask_off / fps, 2)
 print("Mask on: {0}".format(maskOn_Time))
 print("Mask off: {0}".format(maskOff_Time))
 y = np.array([maskOn_Time, maskOff_Time])
