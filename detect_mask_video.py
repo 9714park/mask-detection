@@ -200,21 +200,24 @@ while True:
 
             # display the label and bounding box rectangle on the output
             # frame
-            cv2.putText(frame, label, (startX, startY - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+            cv2.putText(frame, label, (startX, startY - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.65, color, 2)
             cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 
-            cv2.putText(frame, modelName, (0, 10), cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 255, 0), 2)
+        cv2.putText(frame, modelName, (5, 20), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 0), 2)
 
         # write frames to output video
         out.write(frame)
 
         # save some frames
-        # if (frameNum % round(fps / 2)) == 0:
-        #    cv2.imwrite("output/frames/" + modelTypeStr + "/%d.png" % frameNum, frame)
-
-        if saveFrames:
+        if (frameNum % round(fps / 5)) == 0:
             cv2.imwrite("output/frames/" + modelTypeStr + "/%d.png" % frameNum, frame)
-            frameNum += 1
+
+        frameNum += 1
+
+        # save all frames
+        # if saveFrames:
+        #     cv2.imwrite("output/frames/" + modelTypeStr + "/%d.png" % frameNum, frame)
+        #     frameNum += 1
 
         # if the `q` key was pressed, break from the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -233,7 +236,7 @@ print("Mask off: {0}".format(maskOff_Time))
 y = np.array([maskOn_Time, maskOff_Time])
 pieLabel = ["Time with mask on = {0}s".format(maskOn_Time), "Time with Mask off = {0}s".format(maskOff_Time)]
 plt.pie(y, labels=pieLabel)
-plt.savefig("output/graphs/{0}_pieChart.jpg".format(modelNameFile))
+plt.savefig("output/graphs/" + modelNameFile + "_" + videoName + "_pieChart.jpg")
 
 print("\n[INFO] report saved to " + "output/graphs/{0}_pieChart.jpg".format(modelNameFile))
 
