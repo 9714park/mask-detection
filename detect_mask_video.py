@@ -3,6 +3,7 @@ from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
 from imutils.video import VideoStream
+import matplotlib.pyplot as plt
 import numpy as np
 import imutils
 import time
@@ -19,7 +20,6 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 	# pass the blob through the network and obtain the face detections
 	faceNet.setInput(blob)
 	detections = faceNet.forward()
-	print(detections.shape)
 
 	# initialize our list of faces, their corresponding locations,
 	# and the list of predictions from our face mask network
@@ -140,9 +140,10 @@ if (cap.isOpened()== False):
 # frame_height = int(cap.get(4))
 
 out = cv2.VideoWriter("output/videos/" + modelNameVideo + ".avi", cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'), 30, (400, 300))
-
+mask_on = 0
+mask_off = 0
 frameNum = 0
-
+print("Processing video...")
 # loop over the frames from the video stream
 while True:
 	# grab the frame from the threaded video stream and resize it
@@ -167,7 +168,10 @@ while True:
 			# the bounding box and text
 			label = "Mask" if mask > withoutMask else "No Mask"
 			color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
-
+			if label == "Mask":
+				mask_on += 1
+			if label == "No Mask":
+				mask_off +=1
 			# include the probability in the label
 			label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
 
@@ -190,6 +194,16 @@ while True:
 			break
 	else:
 		break
+
+# Plot a pie chart comparing the time spent with mask on vs mask off
+maskOn_Time = round(mask_on/30, 2)
+maskOff_Time = round(mask_off/30, 2)
+print("Mask on: {0}".format(maskOn_Time))
+print("Mask off: {0}".format(maskOff_Time))
+y = np.array([maskOn_Time , maskOff_Time])
+pieLabel = ["Time with mask on = {0}s".format(maskOn_Time), "Time with Mask off = {0}s".format(maskOff_Time)]
+plt.pie(y, labels = pieLabel)
+plt.savefig("output/graphs/{0}_pieChart.jpg".format(modelNameVideo))
 
 # do a bit of cleanup
 cap.release()
