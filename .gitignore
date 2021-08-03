@@ -1,4 +1,4 @@
-*.png
+
 dataset/videos/ongov.mp4
 dataset/videos/*.avi
 output/videos/mask_detector_dlibBlue_model_test_video.avi
