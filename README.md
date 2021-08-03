@@ -8,6 +8,7 @@ The problem we will be investigating is individuals neglecting to wear face mask
 * OpenCV
 * Keras
 * Tensorflow
+* Python
 
 
 ## Collecting Dataset
