@@ -40,7 +40,7 @@ Then we will extract the coordinates for each component of the face using dlib�
 ## Face Mask Detection Models
 4 models were created using each dataset discussed in the previous section. The models were created using TensorFlow with the MobileNetV2 pre-trained model. When training the models we used 20 epochs, with a batch size of 32 and an initial learning rate of 1e-4. Figure 10 shows the training loss and accuracy when creating the blue dlib model.
 
-<p align="center"><img src="https://github.com/rsmpark/mask-detection/blob/master/readme_res/model_result.png" width="450" height="450"></p>
+<p align="center"><img src="https://github.com/rsmpark/mask-detection/blob/master/readme_res/model_result.png" width="500" height="450"></p>
 
 For face mask detection, another method of face detection was utilized. This time, a deep learning model was used to detect faces. A prototext file was used for the architecture and serialization of the model while a caffe model file was used to for the weights of the layer. Both these files were loaded into the program to create the model. CV2’s deep neural network module, “dnn”, was used to load the face detection model along with it’s method readnet. The mask detection model was loaded into the program using tensorflow’s load_model function.
 
